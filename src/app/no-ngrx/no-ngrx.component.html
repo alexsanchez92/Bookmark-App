@@ -1,0 +1,10 @@
+<div class="text-center">
+    <h1>Bookmark Manager No NgRx</h1>
+    <button mat-raised-button color="primary" (click)="openDialog('create', {})">Add new</button>
+</div>
+
+<app-bookmark-table
+    (editEvent)="openDialog('edit',$event)" 
+    (deleteEvent)="openDialog('delete',$event)"
+    >
+</app-bookmark-table>
