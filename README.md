@@ -30,8 +30,6 @@ It works only with Angular Material Table with separated Form and Table componen
 
 It works with NgRx, localStorage and Angular Material Table. Data is saved in localStorage also. So if you refresh the page with F5 previous modifications are manteined. To reset, try deleting localStorage by browser console or closing the browser.
 
-PS: I don't know the reasons (first times with NgRx) but controls does not work in first instance and data is not refreshed instantanealy. It has a little offset, so the next action you do appears previous changes.
-
 # Screenshots
 
 ![Initial table view](images/img-1.JPG)
