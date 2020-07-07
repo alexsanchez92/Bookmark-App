@@ -1,13 +1,11 @@
-import { Component, ViewChild, OnInit } from '@angular/core';
-
+import { Component, ViewChild } from '@angular/core';
 import  {MatDialog} from '@angular/material/dialog';
-import {BookmarkDialogComponent} from '../bookmark-dialog/bookmark-dialog.component';
-import {BookmarkTableComponent} from '../bookmark-table/bookmark-table.component';
+import {BookmarkDialogComponent} from '../../components/bookmark-dialog/bookmark-dialog.component';
+import {BookmarkTableComponent} from '../../components/bookmark-table/bookmark-table.component';
 
 @Component({
   selector: 'app-no-ngrx',
-  templateUrl: './no-ngrx.component.html',
-  styleUrls: ['./no-ngrx.component.css']
+  templateUrl: './no-ngrx.component.html'
 })
 export class NoNgrxComponent{
 
@@ -22,8 +20,6 @@ export class NoNgrxComponent{
 		});
 	
 		dialogRef.afterClosed().subscribe(result => {
-
-			console.log("DIALOG AFTER "+result.action)
 
 			switch(result.action){
 				case 'create':

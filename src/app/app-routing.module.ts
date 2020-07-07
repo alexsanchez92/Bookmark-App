@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import {NoNgrxComponent} from './no-ngrx/no-ngrx.component';
-import {WithNgrxComponent} from './with-ngrx/with-ngrx.component';
+import {NoNgrxComponent} from './outlets/no-ngrx/no-ngrx.component';
+import {WithNgrxComponent} from './outlets/with-ngrx/with-ngrx.component';
 
 const routes: Routes = [
   { path: 'no-ngrx', component: NoNgrxComponent },

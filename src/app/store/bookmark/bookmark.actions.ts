@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { Bookmark } from './bookmark.model';
+import { Bookmark } from '../../models/bookmark.model';
 
 export const load = createAction(
 	'[Bookmark] Load'
@@ -7,24 +7,25 @@ export const load = createAction(
 
 export const loadSuccess = createAction(
 	'[Bookmark] Load success',
-	props<{payload: Bookmark[]}>()
+	props<{ payload: Bookmark[] }>()
 );
 
 export const add = createAction(
 	'[Bookmark] Add',
-	props<{ data: Bookmark }>()
+	props<{ bookmark: Bookmark }>()
 );
 
 export const edit = createAction(
 	'[Bookmark] Edit',
-	props<Bookmark>()
+	props<{ bookmark: Bookmark }>()
 );
+
 export const editSuccess = createAction(
-	'[Bookmark] Load success',
-	props<{payload: Bookmark[]}>()
+	'[Bookmark] Edit success',
+	props<{ payload: Bookmark[] }>()
 );
 
 export const remove = createAction(
   	'[Bookmark] Remove',
-	props<Bookmark>()
+	props<{ bookmark: Bookmark }>()
 );

@@ -1,5 +1,5 @@
 
-import { Bookmark } from 'src/store/bookmark/bookmark.model';
+import { Bookmark } from 'src/app/models/bookmark.model';
   
 export const ELEMENT_DATA: Bookmark[] = [
     {id: 1, name: 'Angular 8', url: '#', group: 'angular'},

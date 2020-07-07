@@ -1,22 +1,19 @@
 import { Component, ViewChild, OnInit, Output, EventEmitter} from '@angular/core';
-
-import {MatTable,MatTableDataSource} from '@angular/material/table';
-
+import { MatTableDataSource} from '@angular/material/table';
 import { ELEMENT_DATA } from 'src/data/bookmark';
-import { Bookmark } from 'src/store/bookmark/bookmark.model';
+import { Bookmark } from 'src/app/models/bookmark.model';
 
 @Component({
   selector: 'app-bookmark-table',
-  templateUrl: './bookmark-table.component.html',
-  styleUrls: ['./bookmark-table.component.css']
+  templateUrl: './bookmark-table.component.html'
 })
 
 export class BookmarkTableComponent implements OnInit{
   
-	displayedColumns: string[] = ['name', 'url', 'group', 'actions'];
-	dataSource = new MatTableDataSource<Bookmark>(ELEMENT_DATA);
-	data:Bookmark[] = ELEMENT_DATA;
-	id = ELEMENT_DATA.length+1;
+	public displayedColumns: string[] = ['name', 'url', 'group', 'actions'];
+	public dataSource = new MatTableDataSource<Bookmark>(ELEMENT_DATA);
+	public data:Bookmark[] = ELEMENT_DATA;
+	public id = ELEMENT_DATA.length+1;
 
   	@Output() editEvent = new EventEmitter<string>();
   	@Output() deleteEvent = new EventEmitter<string>();
@@ -39,21 +36,18 @@ export class BookmarkTableComponent implements OnInit{
 
 	addBookmark(bookmark: Bookmark){    
 
-		let newBookmark:Bookmark = {
+		const newBookmark:Bookmark = {
 			id: this.id++,
 			name: bookmark.name,
 			url: bookmark.url,
 			group: bookmark.group,
 		}
-		console.log("ADD "+newBookmark.id);
 		
 		this.data.push(newBookmark);
 		this.groupData();		
-		//this.table.renderRows();
 	}
 
 	editBookmark(bookmark: Bookmark){
-		console.log("EDIT " +bookmark.id);
 		this.data = this.data.filter((value,key)=>{
 			if(value.id == bookmark.id){
 				value.name = bookmark.name;
@@ -63,25 +57,20 @@ export class BookmarkTableComponent implements OnInit{
 			return true;
 		});
 		this.groupData();	
-		console.log(this.dataSource.data)	
 	}
 		
 	deleteBookmark(bookmark: Bookmark){    
-		console.log("DELETE " +bookmark.id);
-
-		//this.data.splice(0,1);
 		this.data = this.data.filter((value,key)=>{
 			return value.id != bookmark.id;
 		});
 		
 		this.groupData();
-		console.log(this.dataSource.data)
 	}
 
 	groupBy(column:string,data: Bookmark[]){
 		if(!column) return data;
 
-		let collapsedGroups = [];
+		const collapsedGroups = [];
 
 		const customReducer = (accumulator, currentValue) => {
 			let currentGroup = currentValue[column];
@@ -96,9 +85,9 @@ export class BookmarkTableComponent implements OnInit{
 			return accumulator;
 		}
 
-		let groups = data.reduce(customReducer,{});
-		let groupArray = Object.keys(groups).map(key => groups[key]);
-		let flatList = groupArray.reduce((a,c)=>{return a.concat(c); },[]);
+		const groups = data.reduce(customReducer,{});
+		const groupArray = Object.keys(groups).map(key => groups[key]);
+		const flatList = groupArray.reduce((a,c)=>{return a.concat(c); },[]);
 	
 		return flatList.filter((rawLine) => {
 			return rawLine.isGroup || 

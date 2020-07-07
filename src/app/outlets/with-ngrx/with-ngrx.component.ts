@@ -1,25 +1,20 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { load, add, edit, remove } from 'src/store/bookmark/bookmark.actions';
-
+import { load, add, edit, remove } from 'src/app/store/bookmark/bookmark.actions';
 import  {MatDialog} from '@angular/material/dialog';
-import {BookmarkDialogComponent} from '../bookmark-dialog/bookmark-dialog.component';
-import {BookmarkTableNgrxComponent} from '../bookmark-table-ngrx/bookmark-table-ngrx.component';
-
-import { BookmarkState } from 'src/store/bookmark/bookmark.reducer';
+import {BookmarkDialogComponent} from '../../components/bookmark-dialog/bookmark-dialog.component';
+import {BookmarkTableNgrxComponent} from '../../components/bookmark-table-ngrx/bookmark-table-ngrx.component';
+import { BookmarkState } from 'src/app/store/bookmark/bookmark.reducer';
 
 @Component({
   selector: 'app-with-ngrx',
-  templateUrl: './with-ngrx.component.html',
-  styleUrls: ['./with-ngrx.component.css']
+  templateUrl: './with-ngrx.component.html'
 })
+
 export class WithNgrxComponent implements OnInit {  
 	
-	bookmarks$: Observable<BookmarkState>;
-
 	constructor( public dialog: MatDialog, private store: Store<{ bookmarks: BookmarkState }>) {
-		this.bookmarks$ = this.store.pipe(select('bookmarks'));
+		this.store.pipe(select('bookmarks'));
 	}
 
 	ngOnInit(){
@@ -36,19 +31,17 @@ export class WithNgrxComponent implements OnInit {
 	
 		dialogRef.afterClosed().subscribe(result => {
 
-			console.log("DIALOG afterClosed "+result.action)
-
 			switch(result.action){
 				case 'create':
-					this.store.dispatch(add({data: result.data}));
+					this.store.dispatch(add({bookmark: result.data}));
 					this.childTableNgrx.groupData();
 					break;
 				case 'edit':
-					this.store.dispatch(edit(result.data));
+					this.store.dispatch(edit({bookmark: result.data}));
 					this.childTableNgrx.groupData();
 					break;
 				case 'delete':
-					this.store.dispatch(remove(result.data));
+					this.store.dispatch(remove({bookmark: result.data}));
 					this.childTableNgrx.groupData();
 					break;
 			}

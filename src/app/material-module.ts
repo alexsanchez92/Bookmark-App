@@ -1,13 +1,13 @@
 import {NgModule} from '@angular/core';
-
 import {MatButtonModule} from '@angular/material/button';
-import  {MatButtonToggleModule} from '@angular/material/button-toggle';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatTableModule} from '@angular/material/table';
-import  {MatDialogModule} from '@angular/material/dialog';
+import {MatDialogModule} from '@angular/material/dialog';
 import {MatSortModule} from '@angular/material/sort'; 
 import {MatFormFieldModule} from '@angular/material/form-field'; 
 import {MatIconModule} from '@angular/material/icon'; 
 import {MatInputModule} from '@angular/material/input';
+import {MatToolbarModule} from '@angular/material/toolbar';
 
 @NgModule({
     exports: [
@@ -19,6 +19,7 @@ import {MatInputModule} from '@angular/material/input';
       MatFormFieldModule,
       MatIconModule,
       MatInputModule,
+      MatToolbarModule,
     ]
   })
   export class MaterialModule {}
