@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Store, select, Action } from '@ngrx/store';
-import { Actions, createEffect, ofType, act, Effect } from '@ngrx/effects';
-import { Observable, of, throwError, EMPTY } from 'rxjs';
-import { tap, concatMap, withLatestFrom, map, mergeMap, switchMap } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { of } from 'rxjs';
+import { tap, concatMap } from 'rxjs/operators';
 
 import { BookmarkState } from './bookmark.reducer';
 import { load, loadSuccess, add, edit, editSuccess, remove } from './bookmark.actions';
@@ -11,12 +11,11 @@ import { BookmarkService } from 'src/app/services/bookmark.service';
 @Injectable()
 export class BookmarkEffects {
     
-    private storeKey = 'bookmarkList';
     private storeBookmarks: BookmarkState;
    
     constructor(
         private actions$: Actions,
-        private store: Store<{ bookmarks: BookmarkState }>,
+        store: Store<{ bookmarks: BookmarkState }>,
         private service: BookmarkService
     ){
         store.select(state => state.bookmarks).subscribe((data: BookmarkState) => this.storeBookmarks = data );
