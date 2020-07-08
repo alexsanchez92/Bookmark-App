@@ -21,8 +21,7 @@ const _bookmarkReducer = createReducer(
     ),
     
     on(add, (state, data) => {
-            const id = state.bookmarks.id;
-            const bookmark = Object.assign({}, data.bookmark, {id: id})
+            const bookmark = Object.assign({}, data.bookmark, {id: state.bookmarks.id+1})
             return {
                 ...state,
                 bookmarks: {

@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
@@ -34,7 +34,7 @@ import { WithNgrxComponent } from './outlets/with-ngrx/with-ngrx.component';
     BrowserModule,
     FormsModule,
     AppRoutingModule,
-    NoopAnimationsModule,
+    BrowserAnimationsModule,
     MaterialModule,
     StoreModule.forRoot({ bookmarks: bookmarkReducer }),
     EffectsModule.forRoot([BookmarkEffects]),
