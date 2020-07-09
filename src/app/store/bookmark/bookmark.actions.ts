@@ -20,11 +20,6 @@ export const edit = createAction(
 	props<{ bookmark: Bookmark }>()
 );
 
-export const editSuccess = createAction(
-	'[Bookmark] Edit success',
-	props<{ payload: Bookmark[] }>()
-);
-
 export const remove = createAction(
   	'[Bookmark] Remove',
 	props<{ bookmark: Bookmark }>()

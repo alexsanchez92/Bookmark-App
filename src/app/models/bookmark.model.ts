@@ -4,8 +4,3 @@ export interface Bookmark {
     url: string;
     group: string;
 }
-
-export interface Bookmarks {
-    list: Bookmark[];
-    id: number;
-}

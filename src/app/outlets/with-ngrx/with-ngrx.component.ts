@@ -4,7 +4,8 @@ import { load, add, edit, remove } from 'src/app/store/bookmark/bookmark.actions
 import  {MatDialog} from '@angular/material/dialog';
 import {BookmarkDialogComponent} from '../../components/bookmark-dialog/bookmark-dialog.component';
 import {BookmarkTableNgrxComponent} from '../../components/bookmark-table-ngrx/bookmark-table-ngrx.component';
-import { BookmarkState } from 'src/app/store/bookmark/bookmark.reducer';
+import * as BookmarkSelector from 'src/app/store/bookmark/bookmark.selector';
+import {State} from 'src/app/store/bookmark/bookmark.reducer';
 
 @Component({
   selector: 'app-with-ngrx',
@@ -13,8 +14,14 @@ import { BookmarkState } from 'src/app/store/bookmark/bookmark.reducer';
 
 export class WithNgrxComponent implements OnInit {  
 	
-	constructor( public dialog: MatDialog, private store: Store<{ bookmarks: BookmarkState }>) {
-		this.store.pipe(select('bookmarks'));
+	public nextId;
+
+	constructor( public dialog: MatDialog, private store: Store<{ bookmarks: State }>) {
+		this.store.pipe(select(BookmarkSelector.selectBookmarkState));
+		this.store.pipe(select(BookmarkSelector.getNextId)).subscribe( nextId =>{
+				this.nextId = nextId;
+			}
+		);
 	}
 
 	ngOnInit(){
@@ -33,20 +40,19 @@ export class WithNgrxComponent implements OnInit {
 
 			switch(result.action){
 				case 'create':
-					this.store.dispatch(add({bookmark: result.data}));
-					this.childTableNgrx.groupData();
+					const bookmarkInsert = Object.assign({}, result.data, {id: this.nextId});
+					this.store.dispatch(add({bookmark: bookmarkInsert}));
+					//this.childTableNgrx.groupData();
 					break;
 				case 'edit':
 					this.store.dispatch(edit({bookmark: result.data}));
-					this.childTableNgrx.groupData();
+					//this.childTableNgrx.groupData();
 					break;
 				case 'delete':
 					this.store.dispatch(remove({bookmark: result.data}));
-					this.childTableNgrx.groupData();
+					//this.childTableNgrx.groupData();
 					break;
 			}
-
 		});
 	}
-
 }

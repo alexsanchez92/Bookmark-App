@@ -7,8 +7,8 @@ import {WithNgrxComponent} from './outlets/with-ngrx/with-ngrx.component';
 const routes: Routes = [
   { path: 'no-ngrx', component: NoNgrxComponent },
   { path: 'ngrx', component: WithNgrxComponent },
-  { path: '',   redirectTo: '/no-ngrx', pathMatch: 'full' }, // redirect to `first-component`
-  { path: '**', component: NoNgrxComponent },
+  { path: '',   redirectTo: '/ngrx', pathMatch: 'full' }, // redirect to `first-component`
+  { path: '**', component: WithNgrxComponent },
 ];
 
 @NgModule({

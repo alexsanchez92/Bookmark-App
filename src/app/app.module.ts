@@ -36,7 +36,7 @@ import { WithNgrxComponent } from './outlets/with-ngrx/with-ngrx.component';
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,
-    StoreModule.forRoot({ bookmarks: bookmarkReducer }),
+    StoreModule.forRoot({bookmarks: bookmarkReducer}),
     EffectsModule.forRoot([BookmarkEffects]),
     StoreDevtoolsModule.instrument({
       maxAge: 25,

@@ -1,33 +1,28 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { MatTableDataSource } from '@angular/material/table';
-import { Observable } from 'rxjs';
 import { Bookmark } from 'src/app/models/bookmark.model';
-import { BookmarkState } from 'src/app/store/bookmark/bookmark.reducer';
+import { State } from 'src/app/store/bookmark/bookmark.reducer';
+import * as BookmarkSelector from 'src/app/store/bookmark/bookmark.selector';
 
 @Component({
   selector: 'app-bookmark-table-ngrx',
   templateUrl: './bookmark-table-ngrx.component.html'
 })
 
-export class BookmarkTableNgrxComponent implements OnInit{
+export class BookmarkTableNgrxComponent{
 
-	public bookmarks$: Observable<BookmarkState>;
 	public displayedColumns: string[] = ['name', 'url', 'group', 'actions'];
-	public dataSource = new MatTableDataSource<Bookmark>();
+	public dataSource:Bookmark[];
 
   	@Output() editEvent = new EventEmitter<string>();
 	@Output() deleteEvent = new EventEmitter<string>();
 
-	constructor( private store: Store<{ bookmarks: BookmarkState }>) {
-		this.bookmarks$ = this.store.pipe(select('bookmarks'));
-		this.bookmarks$.subscribe( item =>{
-			this.dataSource.data = item.bookmarks.list;
-		});
-	}
-	
-	ngOnInit(){
-		this.groupData();
+	constructor( private store: Store<State>) {
+		this.store.pipe(select(BookmarkSelector.selectAllBookmarks)).subscribe( items =>{
+			this.dataSource = items;
+			this.groupData();
+		}
+		);
 	}
 	
 	public edit(bookmark) {
@@ -39,7 +34,7 @@ export class BookmarkTableNgrxComponent implements OnInit{
 	}
 
 	public groupData(){
-		this.dataSource.data = this.groupBy('group', this.dataSource.data);
+		this.dataSource = this.groupBy('group', this.dataSource);
 	}
 
 	private groupBy(column:string, data: Bookmark[]){
@@ -60,14 +55,14 @@ export class BookmarkTableNgrxComponent implements OnInit{
 			return accumulator;
 		}
 
-		const groups = data.reduce(customReducer,{});
+		const groups = Object.values(data).reduce(customReducer,{});
 		const groupArray = Object.keys(groups).map(key => groups[key]);
 		const flatList = groupArray.reduce((a,c)=>{return a.concat(c); },[]);
 	
 		return flatList.filter((rawLine) => {
 			return rawLine.isGroup || 
 			  	collapsedGroups.every((group) => rawLine[column]!=group.value);
-		  });
+		});
 	}
 	  
 	public isGroup(index, item): boolean{

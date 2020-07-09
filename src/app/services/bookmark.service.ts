@@ -18,10 +18,9 @@ export class BookmarkService {
 		return bookmarkList;
 	}
 
-	public addBookmark(bookmark: Bookmark, id:number){
-		const bookmarkInsert = Object.assign({}, bookmark, {id: id});
+	public addBookmark(bookmark: Bookmark){
 		let listSave = this.getList();
-		listSave.push(bookmarkInsert)
+		listSave.push(bookmark)
 		this.saveList(listSave);
   	}
 

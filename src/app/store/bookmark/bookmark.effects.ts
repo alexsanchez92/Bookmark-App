@@ -1,25 +1,17 @@
 import { Injectable } from '@angular/core';
-import { Store } from '@ngrx/store';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { tap, concatMap } from 'rxjs/operators';
-
-import { BookmarkState } from './bookmark.reducer';
-import { load, loadSuccess, add, edit, editSuccess, remove } from './bookmark.actions';
+import { load, loadSuccess, add, edit, remove } from './bookmark.actions';
 import { BookmarkService } from 'src/app/services/bookmark.service';
 
 @Injectable()
 export class BookmarkEffects {
     
-    private storeBookmarks: BookmarkState;
-   
     constructor(
         private actions$: Actions,
-        store: Store<{ bookmarks: BookmarkState }>,
         private service: BookmarkService
-    ){
-        store.select(state => state.bookmarks).subscribe((data: BookmarkState) => this.storeBookmarks = data );
-    }
+    ){}
     
     public load$ = createEffect(() =>
         this.actions$.pipe(
@@ -36,7 +28,7 @@ export class BookmarkEffects {
         this.actions$.pipe(
             ofType(add),
             tap(action => {
-                this.service.addBookmark(action.bookmark, this.storeBookmarks.bookmarks.id);
+                this.service.addBookmark(action.bookmark);
             })
         ), { dispatch: false }
     );
@@ -44,14 +36,10 @@ export class BookmarkEffects {
     public edit$ = createEffect(() =>
         this.actions$.pipe(
             ofType(edit),
-            concatMap(action => {
+            tap(action => {
                 this.service.editBookmark(action.bookmark);
-                return of(
-                    editSuccess({ payload: this.service.getBookmarks() })
-                );
             })
-
-        )
+        ), { dispatch: false }
     );
 
     public remove$ = createEffect(() =>
