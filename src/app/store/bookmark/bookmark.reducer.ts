@@ -12,12 +12,15 @@ export const initialState: BookmarkState = {
 
 const _bookmarkReducer = createReducer(
     initialState,
-    on(load, state => state),
-
-    on( loadSuccess, (state, { payload }) => ({
-            ...state,
-            bookmarks: { ...state.bookmarks, list: payload, id: payload[payload.length-1].id },
-        })
+    on(load, state => state),    
+    on(loadSuccess, (state,  { payload }) => {
+            let idd;
+            (payload.length)? idd = payload[payload.length-1].id : idd=0;
+            return {
+                ...state,
+                bookmarks: { ...state.bookmarks, list: payload, id: idd },
+            };
+        }
     ),
     
     on(add, (state, data) => {
