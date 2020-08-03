@@ -8,6 +8,8 @@ Create a table using the component Angular Material Table. The table will manage
 These are main properties of each bookmark: name, url, group (work / leisure/ personal / ...)
 Use the user interface for displaying the bookmarks groupped by the "group" property.
 
+[Live App](https://alexsanchez92.github.io/Bookmark-App/)
+
 # Description
 
 The app is a simple table which shows a bookmark management panel. In this manager you can add new bookmarks, edit them or delete what you want.
