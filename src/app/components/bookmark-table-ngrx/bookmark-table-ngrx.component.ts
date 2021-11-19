@@ -1,5 +1,6 @@
-import { Component, Output, EventEmitter } from '@angular/core';
-import { Store, select } from '@ngrx/store';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { select, Store } from '@ngrx/store';
+import { map } from 'rxjs/operators';
 import { Bookmark } from 'src/app/models/bookmark.model';
 import { State } from 'src/app/store/bookmark/bookmark.reducer';
 import * as BookmarkSelector from 'src/app/store/bookmark/bookmark.selector';
@@ -8,65 +9,76 @@ import * as BookmarkSelector from 'src/app/store/bookmark/bookmark.selector';
   selector: 'app-bookmark-table-ngrx',
   templateUrl: './bookmark-table-ngrx.component.html'
 })
+export class BookmarkTableNgrxComponent implements OnInit {
+  public displayedColumns: string[] = ['id', 'name', 'url', 'group', 'actions'];
+  public textColumns = [
+    {
+      name: 'id',
+      header: 'Id',
+      type: 'text'
+    },
+    {
+      name: 'name',
+      header: 'Name',
+      type: 'text'
+    },
+    {
+      name: 'url',
+      header: 'Url',
+      type: 'url'
+    },
+    {
+      name: 'group',
+      header: 'Group',
+      type: 'text'
+    }
+  ];
 
-export class BookmarkTableNgrxComponent{
+  @Output() editEvent = new EventEmitter<Bookmark>();
+  @Output() deleteEvent = new EventEmitter<Bookmark>();
 
-	public displayedColumns: string[] = ['name', 'url', 'group', 'actions'];
-	public dataSource:Bookmark[];
+  model$: any;
 
-  	@Output() editEvent = new EventEmitter<string>();
-	@Output() deleteEvent = new EventEmitter<string>();
+  constructor(private store: Store<State>) {}
 
-	constructor( private store: Store<State>) {
-		this.store.pipe(select(BookmarkSelector.selectAllBookmarks)).subscribe( items =>{
-			this.dataSource = items;
-			this.groupData();
-		}
-		);
-	}
-	
-	public edit(bookmark) {
-      this.editEvent.emit(bookmark);
-	}
-	
-	public delete(bookmark) {
-      this.deleteEvent.emit(bookmark);
-	}
+  ngOnInit() {
+    this.model$ = this.store.pipe(
+      select(BookmarkSelector.selectAllBookmarks),
+      map((data) => this.groupBy('group', data))
+    );
+  }
 
-	public groupData(){
-		this.dataSource = this.groupBy('group', this.dataSource);
-	}
+  public isGroup = (index, item): boolean => item.isGroup;
 
-	private groupBy(column:string, data: Bookmark[]){
-		if(!column) return data;
+  private groupBy(column: string, data: Bookmark[]) {
+    if (!column) return data;
 
-		const collapsedGroups = [];
+    const collapsedGroups = [];
 
-		const customReducer = (accumulator, currentValue) => {
-			let currentGroup = currentValue[column];
-			if(!accumulator[currentGroup])
-			accumulator[currentGroup] = [{
-				groupName: `${column} ${currentValue[column]}`,
-				value: currentValue[column], 
-				isGroup: true
-			}];
-			accumulator[currentGroup].push(currentValue);
-		
-			return accumulator;
-		}
+    const customReducer = (accumulator, currentValue) => {
+      const currentGroup = currentValue[column];
+      if (!accumulator[currentGroup]) {
+        accumulator[currentGroup] = [
+          {
+            groupName: `${column} ${currentValue[column]}`,
+            value: currentValue[column],
+            isGroup: true
+          }
+        ];
+      }
+      accumulator[currentGroup] = [...accumulator[currentGroup], currentValue];
 
-		const groups = Object.values(data).reduce(customReducer,{});
-		const groupArray = Object.keys(groups).map(key => groups[key]);
-		const flatList = groupArray.reduce((a,c)=>{return a.concat(c); },[]);
-	
-		return flatList.filter((rawLine) => {
-			return rawLine.isGroup || 
-			  	collapsedGroups.every((group) => rawLine[column]!=group.value);
-		});
-	}
-	  
-	public isGroup(index, item): boolean{
-		return item.isGroup;
-	}
+      return accumulator;
+    };
 
+    const groups = Object.values(data).reduce(customReducer, {});
+    const groupArray = Object.keys(groups).map((key) => groups[key]);
+    const flatList = groupArray.reduce((a, c) => a.concat(c), []);
+
+    return flatList.filter(
+      (rawLine) =>
+        rawLine.isGroup ||
+        collapsedGroups.every((group) => rawLine[column] != group.value)
+    );
+  }
 }

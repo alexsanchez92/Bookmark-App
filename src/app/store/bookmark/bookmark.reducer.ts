@@ -1,48 +1,45 @@
+import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
 import { Action, createReducer, on } from '@ngrx/store';
-import * as BookmarkActions from './bookmark.actions';
 import { Bookmark } from '../../models/bookmark.model';
-import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
-    
+import * as BookmarkActions from './bookmark.actions';
+
 export interface State extends EntityState<Bookmark> {
-    nextId: number;
+  nextId: number;
 }
 
 export const adapter: EntityAdapter<Bookmark> = createEntityAdapter<Bookmark>();
 
 export const initialState: State = adapter.getInitialState({
-    nextId: 1,
+  nextId: 1
 });
 
-
 const _bookmarkReducer = createReducer(
-    initialState,
+  initialState,
 
-    on(BookmarkActions.load, state => state),    
-    on(BookmarkActions.loadSuccess, (state,  { payload }) => {
-        return adapter.setAll(payload, {
-            ...state, 
-            nextId: (payload.length)? payload[payload.length-1].id+1 : 1
-        });
-    }),
-    
-    on(BookmarkActions.add, (state, { bookmark }) => {
-        return adapter.addOne(bookmark, {
-            ...state, 
-            nextId: state.nextId+1
-        })
-    }),
+  on(BookmarkActions.load, (state) => state),
+  on(BookmarkActions.loadSuccess, (state, { payload }) => {
+    return adapter.setAll(payload, {
+      ...state,
+      nextId: payload.length ? payload[payload.length - 1].id + 1 : 1
+    });
+  }),
 
-    on(BookmarkActions.edit, (state, { bookmark }) => {
-        //return adapter.updateOne(bookmark, state);
-        return adapter.upsertOne(bookmark, state);
-    }),  
+  on(BookmarkActions.add, (state, bookmark) => {
+    return adapter.addOne(bookmark, {
+      ...state,
+      nextId: state.nextId + 1
+    });
+  }),
 
-    on(BookmarkActions.remove, (state, { bookmark }) => {
-        return adapter.removeOne(bookmark.id, state);
-    }),
+  on(BookmarkActions.edit, (state, bookmark) => {
+    return adapter.upsertOne(bookmark, state);
+  }),
 
+  on(BookmarkActions.remove, (state, bookmark) => {
+    return adapter.removeOne(bookmark.id, state);
+  })
 );
 
-export function bookmarkReducer( state: State | undefined, action: Action) {
-    return _bookmarkReducer(state, action);
+export function bookmarkReducer(state: State | undefined, action: Action) {
+  return _bookmarkReducer(state, action);
 }

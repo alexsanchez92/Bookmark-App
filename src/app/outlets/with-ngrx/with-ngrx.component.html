@@ -1,10 +1,36 @@
-<div class="text-center">
+<ng-container *ngIf="model$ | async as model">
+  <div class="text-center">
     <h1>Bookmark Manager With NgRx</h1>
-    <button mat-raised-button color="primary" (click)="openDialog('create', {})">Add new</button>
-</div>
-   
-<app-bookmark-table-ngrx
-    (editEvent)="openDialog('edit',$event)" 
-    (deleteEvent)="openDialog('delete',$event)"
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="
+        dialogAction$.next({
+          action: dialogActions.ADD,
+          bookmark: null,
+          nextId: model.nextId
+        })
+      "
     >
-</app-bookmark-table-ngrx>
+      Add new
+    </button>
+  </div>
+
+  <app-bookmark-table-ngrx
+    (editEvent)="
+      dialogAction$.next({
+        action: dialogActions.EDIT,
+        bookmark: $event,
+        nextId: model.nextId
+      })
+    "
+    (deleteEvent)="
+      dialogAction$.next({
+        action: dialogActions.DELETE,
+        bookmark: $event,
+        nextId: model.nextId
+      })
+    "
+  >
+  </app-bookmark-table-ngrx>
+</ng-container>

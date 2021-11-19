@@ -6,48 +6,43 @@ import { ELEMENT_DATA } from 'src/data/bookmark';
   providedIn: 'root'
 })
 export class BookmarkService {
-  
-	private storeKey = 'bookmarkList';
+  private storeKey = 'bookmarkList';
 
-  	public getBookmarks():Bookmark[]{
-		let bookmarkList = this.getList();
-		if (!bookmarkList) {
-			bookmarkList = ELEMENT_DATA;
-			this.saveList(bookmarkList);
-		}
-		return bookmarkList;
-	}
+  public getBookmarks(): Bookmark[] {
+    let bookmarkList = this.getList();
+    if (!bookmarkList) {
+      bookmarkList = ELEMENT_DATA;
+      this.saveList(bookmarkList);
+    }
+    return bookmarkList;
+  }
 
-	public addBookmark(bookmark: Bookmark){
-		let listSave = this.getList();
-		listSave.push(bookmark)
-		this.saveList(listSave);
-  	}
+  public addBookmark(bookmark: Bookmark) {
+    this.saveList([...this.getList(), bookmark]);
+  }
 
-	public editBookmark(bookmark: Bookmark){
-		this.saveList(
-			this.getList().filter((value,key)=>{
-				if(value.id == bookmark.id){
-					value.name = bookmark.name;
-					value.url = bookmark.url;
-					value.group = bookmark.group;
-				}
-				return true;
-			})
-		);
-	}
+  public editBookmark(bookmark: Bookmark) {
+    this.saveList(
+      this.getList().filter((value) => {
+        if (value.id === bookmark.id) {
+          value.name = bookmark.name;
+          value.url = bookmark.url;
+          value.group = bookmark.group;
+        }
+        return true;
+      })
+    );
+  }
 
-	public deleteBookmark(id: number){
-		this.saveList(
-			this.getList().filter(item => item.id !== id)
-		);
-	}
+  public deleteBookmark(id: number) {
+    this.saveList(this.getList().filter((item) => item.id !== id));
+  }
 
-	private saveList(list:Bookmark[]){
-		window.localStorage.setItem( this.storeKey, JSON.stringify(list) );
-	}
+  private saveList(list: Bookmark[]) {
+    window.localStorage.setItem(this.storeKey, JSON.stringify(list));
+  }
 
-	private getList():Bookmark[]{
-		return JSON.parse( window.localStorage.getItem(this.storeKey) );
-	}
+  private getList(): Bookmark[] {
+    return JSON.parse(window.localStorage.getItem(this.storeKey));
+  }
 }
