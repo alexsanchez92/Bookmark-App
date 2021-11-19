@@ -1,4 +1,5 @@
 {
+  "homepage":"https://alexsanchez92.github.io/Bookmark-App/",
   "name": "alejandrosanchezmunoz",
   "version": "0.0.1",
   "scripts": {
@@ -8,7 +9,9 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "prettify-all": "prettier --write **/*"
+    "prettify-all": "prettier --write **/*",
+    "deploy": "ng build && gh-pages -d dist",
+    "deploy-git": "ng build --prod --deploy-url /Bookmark-App/ && gh-pages -d dist"
   },
   "lint-staged": {
     "*.ts": [
@@ -66,6 +69,7 @@
     "eslint": "^8.2.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
+    "gh-pages": "^3.2.3",
     "husky": "^7.0.4",
     "jasmine-core": "~3.8.0",
     "jasmine-spec-reporter": "~4.2.1",
