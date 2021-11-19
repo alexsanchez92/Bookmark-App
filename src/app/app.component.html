@@ -1,34 +1,81 @@
 <mat-toolbar color="primary" class="nav p-3 d-flex">
-	<mat-toolbar-row class="justify-content-around">
-		<h1>Welcome to Bookmark Manager</h1>
-		
-		<span class="menu-spacer"></span>
-			
-		<div>
-			<ul>
-				<li><a routerLink="/no-ngrx" routerLinkActive="active-link">No NgRx</a></li>
-				<li><a routerLink="/ngrx" routerLinkActive="active-link">With NgRx</a></li>
-			</ul>
-		</div>
-		
+  <mat-toolbar-row class="justify-content-around">
+    <h1>Welcome to Bookmark Manager</h1>
 
-		<a aria-label="Alejandro Sanchez Muñoz" target="_blank" rel="noopener" href="https://www.linkedin.com/in/alejandrosanchez92/" title="Alejandro Sanchez Muñoz">
-			<svg id="linkedin-logo"  height="24" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
-				<path d="m160.007812 423h-70v-226h70zm6.984376-298.003906c0-22.628906-18.359376-40.996094-40.976563-40.996094-22.703125 0-41.015625 18.367188-41.015625 40.996094 0 22.636718 18.3125 41.003906 41.015625 41.003906 22.617187 0 40.976563-18.367188 40.976563-41.003906zm255.007812 173.667968c0-60.667968-12.816406-105.664062-83.6875-105.664062-34.054688 0-56.914062 17.03125-66.246094 34.742188h-.066406v-30.742188h-68v226h68v-112.210938c0-29.386718 7.480469-57.855468 43.90625-57.855468 35.929688 0 37.09375 33.605468 37.09375 59.722656v110.34375h69zm90 153.335938v-392c0-33.085938-26.914062-60-60-60h-392c-33.085938 0-60 26.914062-60 60v392c0 33.085938 26.914062 60 60 60h392c33.085938 0 60-26.914062 60-60zm-60-412c11.027344 0 20 8.972656 20 20v392c0 11.027344-8.972656 20-20 20h-392c-11.027344 0-20-8.972656-20-20v-392c0-11.027344 8.972656-20 20-20zm0 0" fill="#fff"/>
-			</svg>
-		</a>
+    <span class="menu-spacer"></span>
 
-	</mat-toolbar-row>
+    <div>
+      <ul>
+        <li>
+          <a routerLink="/no-ngrx" routerLinkActive="active-link">No NgRx</a>
+        </li>
+        <li>
+          <a routerLink="/ngrx" routerLinkActive="active-link">With NgRx</a>
+        </li>
+      </ul>
+    </div>
+
+    <a
+      aria-label="Alejandro Sanchez Muñoz"
+      target="_blank"
+      rel="noopener"
+      href="https://www.linkedin.com/in/alejandrosanchez92/"
+      title="Alejandro Sanchez Muñoz"
+    >
+      <svg
+        id="linkedin-logo"
+        height="24"
+        viewBox="0 0 500 500"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="m160.007812 423h-70v-226h70zm6.984376-298.003906c0-22.628906-18.359376-40.996094-40.976563-40.996094-22.703125 0-41.015625 18.367188-41.015625 40.996094 0 22.636718 18.3125 41.003906 41.015625 41.003906 22.617187 0 40.976563-18.367188 40.976563-41.003906zm255.007812 173.667968c0-60.667968-12.816406-105.664062-83.6875-105.664062-34.054688 0-56.914062 17.03125-66.246094 34.742188h-.066406v-30.742188h-68v226h68v-112.210938c0-29.386718 7.480469-57.855468 43.90625-57.855468 35.929688 0 37.09375 33.605468 37.09375 59.722656v110.34375h69zm90 153.335938v-392c0-33.085938-26.914062-60-60-60h-392c-33.085938 0-60 26.914062-60 60v392c0 33.085938 26.914062 60 60 60h392c33.085938 0 60-26.914062 60-60zm-60-412c11.027344 0 20 8.972656 20 20v392c0 11.027344-8.972656 20-20 20h-392c-11.027344 0-20-8.972656-20-20v-392c0-11.027344 8.972656-20 20-20zm0 0"
+          fill="#fff"
+        />
+      </svg>
+    </a>
+  </mat-toolbar-row>
 </mat-toolbar>
 
 <div class="container mt-4" role="main">
-	<router-outlet></router-outlet>
+  <router-outlet></router-outlet>
 </div>
 
 <footer class="mt-4 d-flex flex-column align-items-center">
-<h2><a aria-label="Alejandro Sanchez Muñoz" target="_blank" rel="noopener" href="https://www.linkedin.com/in/alejandrosanchez92/" title="Alejandro Sanchez Muñoz">Alejandro Sánchez Muñoz</a></h2>
+  <h2>
+    <a
+      aria-label="Alejandro Sanchez Muñoz"
+      target="_blank"
+      rel="noopener"
+      href="https://www.linkedin.com/in/alejandrosanchez92/"
+      title="Alejandro Sanchez Muñoz"
+      >Alejandro Sánchez Muñoz</a
+    >
+  </h2>
 
-<a class="d-flex justify-content-center" mat-fab color="primary" aria-label="CV Alejandro Sánchez Muñoz" target="_blank" rel="noopener" href="/assets/CV_AlejandroSanchezMunoz.pdf">
-  <mat-icon>attachment</mat-icon>
-</a>
+  <div class="d-flex justify-content-center my-4">
+    <a
+      class="d-flex justify-content-center mx-3"
+      mat-fab
+      color="primary"
+      aria-label="CV Alejandro Sánchez Muñoz"
+      target="_blank"
+      rel="noopener"
+      href="assets/CV_AlejandroSanchezMunoz.pdf"
+    >
+      <mat-icon>attachment</mat-icon> ES
+    </a>
+
+    <a
+      class="d-flex justify-content-center mx-3"
+      mat-fab
+      color="primary"
+      aria-label="CV Alejandro Sánchez Muñoz English"
+      target="_blank"
+      rel="noopener"
+      href="assets/CV_AlejandroSanchezMunoz_ENG.pdf"
+    >
+      <mat-icon>attachment</mat-icon> EN
+    </a>
+  </div>
 </footer>

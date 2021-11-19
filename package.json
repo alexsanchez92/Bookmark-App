@@ -11,7 +11,7 @@
     "e2e": "ng e2e",
     "prettify-all": "prettier --write **/*",
     "deploy": "ng build && gh-pages -d dist",
-    "deploy-git": "ng build --prod --deploy-url /Bookmark-App/ && gh-pages -d dist"
+    "deploy-git": "ng build --prod --base-href /Bookmark-App/ --deploy-url /Bookmark-App/ && gh-pages -d dist"
   },
   "lint-staged": {
     "*.ts": [
