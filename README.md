@@ -26,11 +26,19 @@ Route navigation is on top nav bar:
 All actions (add, edit, delete, grouping) are implemented in both routes.
 
 ## no-ngrx Route
-It works only with Angular Material Table with separated Form and Table components. It does not use NgRx and store properties.
+It works only with Angular Material Table with separated Form and Table components. It does not use NgRx and store properties. (old version from 2020)
 
 ## ngrx Route
 
 It works with NgRx, localStorage and Angular Material Table. Data is saved in localStorage also. So if you refresh the page with F5 previous modifications are manteined. To reset, try deleting localStorage by browser console or closing the browser.
+
+Code has been implemented using functional programming.
+
+# Husky pre-commit
+
+Code files has been modified configuring Husky to execute Linter and Prettier before each commit.
+
+Also, commitlint forces the use of some keywords that the commit message should start with.
 
 # Screenshots
 
